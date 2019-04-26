@@ -1,6 +1,6 @@
 import { Config } from '@app/config'
-import { ConnectionFactory } from '@app/db'
-import { EtherBalanceView } from '@app/db/entities/ether-balance.view'
+import { ConnectionFactory } from '@app/commands/verifier/db'
+import { EtherBalanceView } from '@app/commands/verifier/db/entities/ether-balance.view'
 import ora from 'ora'
 import { Connection } from 'typeorm'
 import Web3 from 'web3'

@@ -1,4 +1,4 @@
-import { Erc20Balances, EtherBalances, EthTokensToCoingecko } from '@app/commands'
+import { Erc20Balances, EtherBalances, EthTokensToCoingecko, getBalanceCommand, getContractAddressCommand, waitForConfirmationCommand } from '@app/commands'
 import { Config } from '@app/config'
 import program from 'commander'
 
@@ -8,16 +8,27 @@ program
   .version('1.0.0')
 
 program
-  .command('ether-balances')
+  .command('verifier <subcommand>')
   .option('-b, --block [block]', 'Block number to use when requesting ether balances from web3')
-  .action(async cmd => EtherBalances(config, cmd.block))
+  .action(async (subcommand, cmd) => {
+    switch (subcommand) {
+      case 'ether-balances': EtherBalances(config, cmd.block); break;
+      case 'erc20-balances': Erc20Balances(config); break;
+    }
+  })
 
 program
-  .command('erc20-balances')
-  .action(async () => Erc20Balances(config))
+  .command('coingecko-eth-tokens')
+  .action(async () => EthTokensToCoingecko(config.coingeckoCommand))
 
 program
-  .command('eth-tokens-to-coingecko-ids')
-  .action(async () => EthTokensToCoingecko(config.tokens))
+  .command('monkey <action> [subcommand]')
+  .action(async (action, subcommand) => {
+    switch (action) {
+      case 'contract-address': getContractAddressCommand(subcommand); break;
+      case 'balance': getBalanceCommand(subcommand); break;
+      case 'confirm': waitForConfirmationCommand(subcommand); break;
+    }
+  })
 
 program.parse(process.argv)

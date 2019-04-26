@@ -1,4 +1,4 @@
-import { Config, TokensConfig } from '@app/config'
+import { CoinGeckoCommandConfig } from '@app/config'
 import axios from 'axios'
 import fs from 'fs'
 import ora from 'ora'
@@ -19,7 +19,7 @@ interface Entry {
   id: string
 }
 
-export async function EthTokensToCoingecko(config: TokensConfig) {
+export async function EthTokensToCoingecko(config: CoinGeckoCommandConfig) {
   spinner.info(`Fetching ETH Tokens from: ${config.url}`)
 
   const tokens: Token[] = (await fetch<any[]>(config.url)).map(t => {

@@ -1,6 +1,6 @@
 import { Config } from '@app/config'
-import { ConnectionFactory } from '@app/db'
-import { Erc20BalanceView } from '@app/db/entities/erc20-balance.view'
+import { ConnectionFactory } from '@app/commands/verifier/db'
+import { Erc20BalanceView } from '@app/commands/verifier/db/entities/erc20-balance.view'
 import BN from 'bn.js'
 import ora from 'ora'
 import { Connection } from 'typeorm'

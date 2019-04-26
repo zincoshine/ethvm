@@ -1,7 +1,7 @@
-import { Erc20BalanceView } from '@app/db/entities/erc20-balance.view';
-import convict from 'convict';
-import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
-import { EtherBalanceView } from './db/entities/ether-balance.view';
+import { Erc20BalanceView } from '@app/commands/verifier/db/entities/erc20-balance.view'
+import { EtherBalanceView } from '@app/commands/verifier/db/entities/ether-balance.view'
+import convict from 'convict'
+import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions'
 
 const schema = {
   kafka: {
@@ -52,13 +52,15 @@ const schema = {
       env: 'WEB3_WS_URL'
     }
   },
-  tokens: {
-    url: {
-      doc: 'List of Ethereum Tokens',
-      default: 'https://raw.githubusercontent.com/MyEtherWallet/ethereum-lists/master/dist/tokens/eth/tokens-eth.min.json',
-      env: 'TOKENS_URL'
+  coingecko: {
+    tokens: {
+      url: {
+        doc: 'List of Ethereum Tokens',
+        default: 'https://raw.githubusercontent.com/MyEtherWallet/ethereum-lists/master/dist/tokens/eth/tokens-eth.min.json',
+        env: 'TOKENS_URL'
+      }
     }
-  }
+  },
 }
 
 export interface KafkaConfig {
@@ -70,7 +72,7 @@ export interface Web3Config {
   wsUrl: string
 }
 
-export interface TokensConfig {
+export interface CoinGeckoCommandConfig {
   url: string
 }
 
@@ -105,7 +107,7 @@ export class Config {
     return this.config.get('web3')
   }
 
-  get tokens(): TokensConfig {
-    return this.config.get('tokens')
+  get coingeckoCommand(): CoinGeckoCommandConfig {
+    return this.config.get('coingecko.tokens')
   }
 }
