@@ -73,7 +73,7 @@ export class TokenResolvers {
   }
 
   @Query()
-  async tokensMetadata(@Args('symbols') symbols: string[]): Promise<TokenMetadataDto[]> {
+  async tokensMetadata(@Args('symbols') symbols?: string[]): Promise<TokenMetadataDto[]> {
     return await this.tokenService.findTokensMetadata(symbols)
   }
 }

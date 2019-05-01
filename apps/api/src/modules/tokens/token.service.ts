@@ -174,9 +174,10 @@ export class TokenService {
     return numErc20Tokens + numErc721Tokens
   }
 
-  async findTokensMetadata(symbols: string[]): Promise<TokenMetadataDto[]> {
+  async findTokensMetadata(symbols: string[] = []): Promise<TokenMetadataDto[]> {
+    const where = symbols.length > 0 ? { symbol: Any(symbols) } : {}
     const findOptions = {
-      where: { symbol: Any(symbols) },
+      where,
       relations: ['contractMetadata'],
     }
     const erc20Tokens = await this.erc20MetadataRepository.find(findOptions)
