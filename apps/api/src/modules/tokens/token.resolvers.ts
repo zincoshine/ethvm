@@ -6,6 +6,7 @@ import { ParsePagePipe } from '@app/shared/validation/parse-page.pipe'
 import { TokenHolderDto } from '@app/modules/tokens/dto/token-holder.dto'
 import { TokenExchangeRateDto } from '@app/modules/tokens/dto/token-exchange-rate.dto'
 import { TokenMetadataDto } from '@app/modules/tokens/dto/token-metadata.dto'
+import { TokensMetadataArgs } from '@app/modules/tokens/args/tokens-metadata.args'
 
 @Resolver('Token')
 export class TokenResolvers {
@@ -46,11 +47,18 @@ export class TokenResolvers {
     return await this.tokenService.findCoinExchangeRate(pair)
   }
 
-  @Query()
-  async tokenExchangeRates(@Args('filter') filter: string, @Args('limit', ParseLimitPipe) limit?: number, @Args('page', ParsePagePipe) page?: number, @Args('symbols') symbols?: string[]) {
-    const entities = await this.tokenService.findTokenExchangeRates(filter, limit, page, symbols)
+  // @Query()
+  async tokenExchangeRates(@Args('filter') filter: string, @Args('limit', ParseLimitPipe) limit?: number, @Args('page', ParsePagePipe) page?: number) {
+    const entities = await this.tokenService.findTokenExchangeRates(filter, limit, page)
     return entities.map(e => new TokenExchangeRateDto(e))
   }
+
+  // HELP HERE //
+  // @Query()
+  // async tokenExchangeRates(@Args('filter') filter: string, @Args('limit', ParseLimitPipe) limit?: number, @Args('page', ParsePagePipe) page?: number, @Args('symbols') symbols?: string[]) {
+  //   const entities = await this.tokenService.findTokenExchangeRates(filter, limit, page, symbols)
+  //   return entities.map(e => new TokenExchangeRateDto(e))
+  // }
 
   @Query()
   async totalNumTokenExchangeRates() {
@@ -73,7 +81,7 @@ export class TokenResolvers {
   }
 
   @Query()
-  async tokensMetadata(@Args('symbols') symbols?: string[]): Promise<TokenMetadataDto[]> {
+  async tokensMetadata(@Args() {symbols}: TokensMetadataArgs): Promise<TokenMetadataDto[]> {
     return await this.tokenService.findTokensMetadata(symbols)
   }
 }
