@@ -107,7 +107,7 @@ export class TokenService {
     return this.coinExchangeRateRepository.findOne(findOptions)
   }
 
-  async findTokenExchangeRates(sort: string, take: number = 10, page: number = 0): Promise<TokenExchangeRateEntity[]> {
+  async findTokenExchangeRates(sort: string, take: number = 10, page: number = 0, symbols: string[] = []): Promise<TokenExchangeRateEntity[]> {
     const skip = take * page
     let order
     switch (sort) {
@@ -134,7 +134,14 @@ export class TokenService {
         order = { marketCapRank: 1 }
         break
     }
-    return this.tokenExchangeRateRepository.find({ order, skip, take })
+    const where = symbols.length > 0 ? { symbol: Any(symbols) } : {}
+    const findOptions: FindManyOptions = {
+      where,
+      order,
+      take,
+      skip,
+    }
+    return this.tokenExchangeRateRepository.find(findOptions)
   }
 
   async countTokenExchangeRates(): Promise<number> {

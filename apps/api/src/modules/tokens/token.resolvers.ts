@@ -47,8 +47,8 @@ export class TokenResolvers {
   }
 
   @Query()
-  async tokenExchangeRates(@Args('filter') filter: string, @Args('limit', ParseLimitPipe) limit?: number, @Args('page', ParsePagePipe) page?: number) {
-    const entities = await this.tokenService.findTokenExchangeRates(filter, limit, page)
+  async tokenExchangeRates(@Args('filter') filter: string, @Args('limit', ParseLimitPipe) limit?: number, @Args('page', ParsePagePipe) page?: number, @Args('symbols') symbols?: string[]) {
+    const entities = await this.tokenService.findTokenExchangeRates(filter, limit, page, symbols)
     return entities.map(e => new TokenExchangeRateDto(e))
   }
 
