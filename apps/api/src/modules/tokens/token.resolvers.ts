@@ -52,7 +52,7 @@ export class TokenResolvers {
     @Args('filter') filter: string,
     @Args('limit', ParseLimitPipe) limit?: number,
     @Args('page', ParsePagePipe) page?: number,
-    @Args({name: 'symbols', type: () => [String]}) symbols?: string[]
+    @Args({name: 'symbols', type: () => [String]}) symbols?: string[],
   ) {
     const entities = await this.tokenService.findTokenExchangeRates(filter, limit, page, symbols)
     return entities.map(e => new TokenExchangeRateDto(e))
