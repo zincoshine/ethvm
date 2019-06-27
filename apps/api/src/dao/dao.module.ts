@@ -3,7 +3,6 @@ import {BlockHeaderEntity} from '@app/orm/entities/block-header.entity'
 import {ContractMetadataEntity} from '@app/orm/entities/contract-metadata.entity'
 import {ContractEntity} from '@app/orm/entities/contract.entity'
 import {Erc20BalanceEntity} from '@app/orm/entities/erc20-balance.entity'
-import {Erc721BalanceEntity} from '@app/orm/entities/erc721-balance.entity'
 import {FungibleBalanceTransferEntity} from '@app/orm/entities/fungible-balance-transfer.entity'
 import {FungibleBalanceDeltaEntity} from '@app/orm/entities/fungible-balance-delta.entity'
 import {TokenExchangeRateEntity} from '@app/orm/entities/token-exchange-rate.entity'
@@ -14,8 +13,6 @@ import {UncleEntity} from '@app/orm/entities/uncle.entity'
 import {Module} from '@nestjs/common'
 import {TypeOrmModule} from '@nestjs/typeorm'
 import {CoinExchangeRateEntity} from '@app/orm/entities/coin-exchange-rate.entity'
-import {Erc721MetadataEntity} from '@app/orm/entities/erc721-metadata.entity'
-import {Erc20MetadataEntity} from '@app/orm/entities/erc20-metadata.entity'
 import {AccountService} from '@app/dao/account.service'
 import {BlockService} from '@app/dao/block.service'
 import {BlockMetricsService} from '@app/dao/block-metrics.service'
@@ -31,6 +28,7 @@ import {BlockMetricEntity} from '@app/orm/entities/block-metric.entity'
 import { MetadataEntity } from '@app/orm/entities/metadata.entity'
 import { MetadataService } from '@app/dao/metadata.service'
 import { TokenMetadataEntity } from '@app/orm/entities/token-metadata.entity'
+import { TokenHolderEntity } from '@app/orm/entities/token-holder.entity'
 
 @Module({
   imports: [
@@ -41,19 +39,17 @@ import { TokenMetadataEntity } from '@app/orm/entities/token-metadata.entity'
       ContractEntity,
       ContractMetadataEntity,
       Erc20BalanceEntity,
-      Erc721BalanceEntity,
       FungibleBalanceTransferEntity,
       FungibleBalanceDeltaEntity,
       TokenExchangeRateEntity,
       TransactionEntity,
       TransactionReceiptEntity,
       TransactionTraceEntity,
-      Erc20MetadataEntity,
-      Erc721MetadataEntity,
       CoinExchangeRateEntity,
       BlockMetricEntity,
       MetadataEntity,
       TokenMetadataEntity,
+      TokenHolderEntity,
     ]),
   ],
   providers: [

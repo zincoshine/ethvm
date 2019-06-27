@@ -1,10 +1,10 @@
 import { Erc20BalanceEntity } from '@app/orm/entities/erc20-balance.entity';
-import { Erc721BalanceEntity } from '@app/orm/entities/erc721-balance.entity';
 import { assignClean } from '@app/shared/utils';
 import BigNumber from 'bignumber.js';
 import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn } from 'typeorm'
 import { BigNumberTransformer } from '../transformers/big-number.transformer';
 import { ContractEntity } from '@app/orm/entities/contract.entity'
+import { TokenHolderEntity } from '@app/orm/entities/token-holder.entity'
 
 @Entity('canonical_token_exchange_rates')
 export class TokenExchangeRateEntity {
@@ -64,19 +64,19 @@ export class TokenExchangeRateEntity {
   @Column({ type: 'bigint', readonly: true })
   lastUpdated?: string
 
+  @OneToMany(type => TokenHolderEntity, th => th.tokenExchangeRate)
+  @JoinColumn({
+    name: 'address',
+    referencedColumnName: 'contract',
+  })
+  tokenHolders?: TokenHolderEntity[]
+
   @OneToMany(type => Erc20BalanceEntity, erc20 => erc20.tokenExchangeRate)
   @JoinColumn({
     name: 'address',
     referencedColumnName: 'contract',
   })
   erc20Balances?: Erc20BalanceEntity[]
-
-  @OneToMany(type => Erc721BalanceEntity, erc721 => erc721.tokenExchangeRate)
-  @JoinColumn({
-    name: 'address',
-    referencedColumnName: 'contract',
-  })
-  erc721Balances?: Erc721BalanceEntity[]
 
   @OneToOne(type => ContractEntity, c => c.tokenExchangeRate)
   @JoinColumn({

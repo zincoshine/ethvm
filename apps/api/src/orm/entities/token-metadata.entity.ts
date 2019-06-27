@@ -1,5 +1,7 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm'
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn } from 'typeorm'
 import { assignClean } from '@app/shared/utils'
+import { TokenHolderEntity } from '@app/orm/entities/token-holder.entity'
+import { ContractEntity } from '@app/orm/entities/contract.entity'
 
 @Entity('token_metadata')
 export class TokenMetadataEntity {
@@ -29,4 +31,17 @@ export class TokenMetadataEntity {
   @Column({ type: 'integer', readonly: true })
   decimals?: string
 
+  @OneToMany(type => TokenHolderEntity, th => th.metadata)
+  @JoinColumn({
+    name: 'address',
+    referencedColumnName: 'contract',
+  })
+  tokenHolders?: TokenHolderEntity[]
+
+  @OneToOne(type => ContractEntity, c => c.tokenMetadata)
+  @JoinColumn({
+    name: 'address',
+    referencedColumnName: 'address',
+  })
+  contract?: ContractEntity
 }
