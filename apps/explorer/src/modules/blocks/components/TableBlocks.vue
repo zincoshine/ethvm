@@ -1,5 +1,5 @@
 <template>
-  <v-card color="white" flat class="pt-3 mt-0">
+  <v-card color="white card-padding" flat>
     <notice-new-block @reload="resetFromBlock" />
 
     <!--
@@ -7,7 +7,7 @@
       TITLE
     =====================================================================================
     -->
-    <v-layout v-if="pageType != 'home'" align-end justify-space-between row wrap fill-height pb-1 pr-2 pl-2>
+    <v-layout v-if="pageType != 'home'" align-end justify-space-between row wrap fill-height>
       <v-flex xs12 sm5 md4 class="title-live" pb-0>
         <v-layout align-end justify-start row fill-height>
           <v-card-title class="title font-weight-bold pl-2">{{ getTitle }}</v-card-title>
@@ -365,7 +365,10 @@ export default class TableBlocks extends Vue {
 .title-live {
   min-height: 60px;
 }
-  .table-blocks-header-card {
-    margin-right: 1px
-  }
+.table-blocks-header-card {
+  margin-right: 1px
+}
+.card-padding {
+  padding: 20px;
+}
 </style>
