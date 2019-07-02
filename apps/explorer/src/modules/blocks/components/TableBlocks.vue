@@ -50,10 +50,10 @@
       TABLE HEADER
     =====================================================================================
     -->
-    <v-layout pl-2 pr-2>
+    <v-layout v-if="!hasError">
       <v-flex hidden-xs-only sm12>
-        <v-card v-if="!hasError" color="info" flat class="white--text pl-3 pr-1 table-blocks-header-card" height="40px">
-          <v-layout align-center justify-start row fill-height pr-3>
+        <v-card color="info" dark flat class="pl-3 pr-3 table-blocks-header-card">
+          <v-layout align-center justify-start row fill-height>
             <v-flex sm2>
               <h5>{{ $t('block.number') }}</h5>
             </v-flex>
@@ -61,7 +61,7 @@
             <v-flex sm2>
               <h5>{{ $tc('tx.name', 2) }}</h5>
             </v-flex>
-            <v-flex sm1 xl2>
+            <v-flex sm2>
               <h5>{{ $t('miner.reward-short') }}</h5>
             </v-flex>
           </v-layout>
@@ -73,35 +73,31 @@
       TABLE BODY
     =====================================================================================
     -->
-    <v-container v-if="!hasError" flat :style="getStyle" class="scroll-y pa-2">
-      <v-layout column class="mb-1">
-        <v-flex v-if="!loading">
-          <div v-for="(block, index) in blocks" :key="index">
-            <table-blocks-row :block="block" :page-type="pageType" />
-          </div>
-        </v-flex>
+    <v-layout column class="scroll-y" v-if="!hasError" flat :style="getStyle">
+      <v-flex v-if="!loading" v-for="(block, index) in blocks" :key="index">
+        <table-blocks-row :block="block" :page-type="pageType" />
+      </v-flex>
 
-        <div xs12 v-if="loading">
-          <div v-for="i in maxItems" :key="i">
-            <v-layout grid-list-xs row wrap align-center justify-start fill-height class="pl-2 pr-2 pt-2">
-              <v-flex xs6 sm2 order-xs1>
-                <v-flex xs12 class="table-row-loading"></v-flex>
-              </v-flex>
-              <v-flex xs12 sm7 md6>
-                <v-flex xs12 class="table-row-loading"></v-flex>
-              </v-flex>
-              <v-flex hidden-sm-and-down md2 order-xs4 order-sm3>
-                <v-flex xs12 class="table-row-loading"></v-flex>
-              </v-flex>
-              <v-flex d-flex xs6 sm3 md2 order-xs2 order-md4>
-                <v-flex xs12 class="table-row-loading"></v-flex>
-              </v-flex>
-            </v-layout>
-            <v-divider class="mb-2 mt-2" />
-          </div>
+      <div xs12 v-if="loading">
+        <div v-for="i in maxItems" :key="i">
+          <v-layout grid-list-xs row wrap align-center justify-start fill-height class="pl-2 pr-2 pt-2">
+            <v-flex xs6 sm2 order-xs1>
+              <v-flex xs12 class="table-row-loading"></v-flex>
+            </v-flex>
+            <v-flex xs12 sm7 md6>
+              <v-flex xs12 class="table-row-loading"></v-flex>
+            </v-flex>
+            <v-flex hidden-sm-and-down md2 order-xs4 order-sm3>
+              <v-flex xs12 class="table-row-loading"></v-flex>
+            </v-flex>
+            <v-flex d-flex xs6 sm3 md2 order-xs2 order-md4>
+              <v-flex xs12 class="table-row-loading"></v-flex>
+            </v-flex>
+          </v-layout>
+          <v-divider class="mb-2 mt-2" />
         </div>
-      </v-layout>
-    </v-container>
+      </div>
+    </v-layout>
     <v-layout v-if="pageType != 'home' && pages > 1" justify-end row class="pb-1 pr-2 pl-2">
       <app-paginate
         :total="pages"
@@ -366,7 +362,7 @@ export default class TableBlocks extends Vue {
   min-height: 60px;
 }
 .table-blocks-header-card {
-  margin-right: 1px
+  margin-right: 0px
 }
 .card-padding {
   padding: 20px;
